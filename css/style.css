@@ -1,0 +1,155 @@
+:root {
+    --ff-display: 'Yeseva One', cursive;
+    --ff-body: 'Montserrat', sans-serif;
+    --clr-dark-gray: hsl(0, 0%, 13%);
+    --clr-gold: hsl(46, 65%, 52%);
+    --clr-light-blue: hsl(204, 64%, 44%);
+    --clr-off-white: hsl(210, 50%, 98%);
+}
+
+*,
+::before,
+::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body  {
+    font-family: var(--ff-body);
+}
+
+header {
+    position: relative;
+    width: 100%;
+    background-color: var(--clr-dark-gray);
+    color: var(--clr-gold);
+    padding: 15px 0;
+}
+
+.logo {
+    width: 100%;
+}
+
+.logo h1 {
+    width: 100%;
+    text-align: center;
+    /* the gear icons also takes a specific space */
+    padding-right: 21px;
+    font-family: var(--ff-display);
+    font-weight: 400;
+    font-size: 1.8rem;
+}
+
+nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+}
+
+.settings {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--clr-gold);
+    cursor: pointer;
+}
+
+.settings:hover {
+    animation: rotate 2s linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+main {
+    background-color: var(--clr-light-blue);
+    min-height: calc(100vh - 63px);
+    display: flex;
+    place-content: center;
+    align-items: center;
+}
+
+.game {
+    padding: 25px 0;
+}
+
+.game-guess {
+    text-align: center;
+    font-family: var(--ff-display);
+    color: var(--clr-off-white);
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+}
+
+.game-100 .game-frame {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    border: 5px solid var(--clr-gold);
+}
+
+.game-100 .game-tile {
+    width: 62px;
+    height: 62px;
+}
+
+.game-open-tile {
+    border: 0.5px dotted var(--clr-off-white);
+    background-color: var(--clr-dark-gray);
+    cursor: pointer;
+}
+
+.game-bad-tile {
+    background-color: transparent;
+    background: url(../imgs/water.jpg) center / cover no-repeat;
+}
+
+/* the game-open-tile should be visible for 2 seconds and do a flip animation, then it dissapears and there is the 2s flip of the pot */
+.game-pot-tile {
+    background-color: var(--clr-light-blue);
+    background: url(../imgs/goldpot.svg) center / 80% 80% no-repeat;
+    transform: rotateY(70deg);
+}
+
+@media (max-width: 660px) {
+    .game-100 .game-tile {
+        width: 52px;
+        height: 52px;
+    }
+}
+
+@media (max-width: 550px) {
+    .game-100 .game-tile {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+@media (max-width: 450px) {
+    .game-100 .game-tile {
+        width: 62px;
+        height: 62px;
+    }
+    .game-100 .game-frame {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(20, 1fr);
+    }
+}
+
+@media (max-width: 325px) {
+    .game-100 .game-tile {
+        width: 42px;
+        height: 42px;
+    }
+}
