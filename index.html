@@ -125,7 +125,7 @@
         </section>
     </main>
 
-    <div class="bg-modal">
+    <div class="bg-modal d-none">
         <div class="modal-box modal-info d-none">
             <div class="modal-title">
                 <h2>Info</h2>
@@ -143,7 +143,7 @@
             </div>
         </div>
 
-        <div class="modal-box modal-settings">
+        <div class="modal-box modal-settings d-none">
             <div class="modal-close close"><i class="fas fa-times close"></i></div>
             <div class="modal-title">
                 <h2>Settings</h2>
@@ -200,6 +200,32 @@
             </div>
             <div class="modal-settings-disclaimer">
                 <p>If you change the default settings the game will not be counted in your statistics.</p>
+            </div>
+        </div>
+
+        <div class="modal-box modal-stats d-none">
+            <div class="modal-close close"><i class="fas fa-times close"></i></div>
+
+            <div class="modal-title">
+                <h2>Statistics</h2>
+            </div>
+
+            <div class="modal-stats-games">
+                <p><span class="modal-stats-quests">7</span> quests for gold</p>
+                <p><span class="modal-stats-pots">6</span> pots of gold found</p>
+            </div>
+
+            <div class="modal-stats-guess">
+                <h3>Guess distribution</h3>
+                <div class="modal-stats-bar">
+                    <p class="modal-stats-one">1</p><div class="modal-stats-one-bar"></div>
+                </div>
+                <div class="modal-stats-bar">
+                    <p class="modal-stats-two">2</p><div class="modal-stats-two-bar"></div>
+                </div>
+                <div class="modal-stats-bar">
+                    <p class="modal-stats-three">3</p><div class="modal-stats-three-bar"></div>
+                </div>
             </div>
         </div>
     </div>
