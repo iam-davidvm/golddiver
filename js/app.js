@@ -7,9 +7,12 @@ const goldSpots = [18,83,16,88,53,88,77,13,11,63,53,26,70,60,87,15,33,6,43,95,80
 const gameTiles = document.getElementsByClassName('game-tile');
 const gameGuessAmount = document.querySelector('.game-guess-amount');
 const modal = document.querySelector('.modal');
+const modalInfo = document.querySelector('.modal-info');
+const modalSettings = document.querySelector('.modal-settings');
 const modalStats = document.querySelector('.modal-stats');
 const modalClose = document.getElementsByClassName('modal-close');
 const timesClose = document.getElementsByClassName('fa-times');
+const btnSettings = document.querySelector('.settings');
 
 const todaysGold = goldSpots[0];
 let guesses = 1;
@@ -37,8 +40,9 @@ const turnTile = (tile, isGold) => {
 }
 
 const gameOver = () => {
-    modal.classList.toggle('d-none');
-    modalStats.classList.toggle('d-none');
+    console.log('won');
+    modal.classList.remove('d-none');
+    modalStats.classList.remove('d-none');
 }
 
 for (let i = 0; i < gameTiles.length; i++) {
@@ -51,7 +55,6 @@ for (let i = 0; i < gameTiles.length; i++) {
             turnTile(e.target, foundGold)
             setTimeout(gameOver, 1200);
         } else {
-            console.log(guesses);
             turnTile(e.target, foundGold)
             if (guesses === 3) {
                 setTimeout(gameOver, 1200);   
@@ -63,6 +66,18 @@ for (let i = 0; i < gameTiles.length; i++) {
         }
     })
 }
+
+/* hiding and showing modals */
+modal.addEventListener('click', (e) => {
+    const modalChildren = e.target.children;
+    for (let modalChild of modalChildren) {
+        if (!modalChild.classList.contains('d-none')) {
+            modalChild.classList.add('d-none');
+        }
+    }
+    modal.classList.add('d-none');
+});
+
 
 for (let i = 0; i < modalClose.length; i++) {
     modalClose[i].addEventListener('click', (e) => {
@@ -81,3 +96,12 @@ for (let i = 0; i < timesClose.length; i++) {
         modal.classList.add('d-none');
     });
 }
+
+btnSettings.addEventListener('click', () => {
+    modal.classList.remove('d-none');
+    modalSettings.classList.remove('d-none');
+    modalStats.classList.add('d-none');
+    modalInfo.classList.add('d-none');
+})
+
+/* end of modal */
