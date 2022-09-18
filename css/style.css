@@ -113,18 +113,46 @@ main {
 .game-bad-tile {
     background-color: transparent;
     background: url(../imgs/water.jpg) center / cover no-repeat;
+    transform: rotateY(180deg);
 }
 
 /* the game-open-tile should be visible for 2 seconds and do a flip animation, then it dissapears and there is the 2s flip of the pot */
 .game-pot-tile {
     background-color: var(--clr-light-blue);
     background: url(../imgs/goldpot.svg) center / 80% 80% no-repeat;
-    transform: rotateY(70deg);
+    transform: rotateY(180deg);
+}
+
+.turn-front {
+    animation: turnFront 600ms;
+}
+
+@keyframes turnFront {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(90deg);
+    }
+}
+
+.turn-back {
+    animation: turnBack 600ms;
+}
+
+
+@keyframes turnBack {
+    from {
+        transform: rotateY(90deg);
+    }
+    to {
+        transform: rotateY(180deg);
+    }
 }
 
 /* modal */
 
-.bg-modal {
+.modal {
     position: absolute;
     top: 0;
     left: 0;
