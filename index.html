@@ -126,8 +126,7 @@
     </main>
 
     <div class="bg-modal">
-        <div class="modal-box modal-info">
-            <!-- <div class="modal-close close"><i class="fas fa-times close"></i></div> -->
+        <div class="modal-box modal-info d-none">
             <div class="modal-title">
                 <h2>Info</h2>
             </div>
@@ -139,10 +138,69 @@
                 <p>If you play this game you agree that information will be stored in your browser to keep track of your wins and losses.</p>
                 <p>We use your data only for your experience.</p>
             </div>
-            <div class="modal-info-play">
+            <div class="modal-info-button">
                 <button>Play</button>
             </div>
+        </div>
 
+        <div class="modal-box modal-settings">
+            <div class="modal-close close"><i class="fas fa-times close"></i></div>
+            <div class="modal-title">
+                <h2>Settings</h2>
+            </div>
+
+            <div class="modal-settings-body">
+                <h3>Pots</h3>
+                <p>Define how many pots there are hidden (bigger chance to finde one)</p>
+                <div class="modal-settings-radio">
+                    <div class="modal-settings-radio-option">
+                        <label for="one">1
+                            <input type="radio" name="pots" id="one">
+                            <span class="radiobutton"></span>
+                        </label>
+                    </div>
+                    <div class="modal-settings-radio-option">
+                        <label for="three">2
+                            <input type="radio" name="pots" id="three">
+                            <span class="radiobutton"></span>
+                        </label>
+                    </div>
+                    <div class="modal-settings-radio-option">
+                        <label for="default">Default
+                            <input type="radio" name="pots" id="default" checked>
+                            <span class="radiobutton"></span>
+                        </label>
+                    </div>
+                </div>
+                <h3>Size</h3>
+                <p>Define how big the playing field is (bigger means more difficult)</p>
+                <div class="modal-settings-radio">
+                    <div class="modal-settings-radio-option">
+                        <label for="onehundred">100
+                            <input type="radio" name="size" id="onehundred">
+                            <span class="radiobutton"></span>
+                        </label>
+                    </div>
+                    <div class="modal-settings-radio-option">
+                        <label for="twofivesix">256
+                            <input type="radio" name="size" id="twofivesix">
+                            <span class="radiobutton"></span>
+                        </label>
+                    </div>
+                    <div class="modal-settings-radio-option">
+                        <label for="defaultsize">Default
+                            <input type="radio" name="size" id="defaultsize" checked>
+                            <span class="radiobutton"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-settings-button">
+                <button>Save</button>
+            </div>
+            <div class="modal-settings-disclaimer">
+                <p>If you change the default settings the game will not be counted in your statistics.</p>
+            </div>
         </div>
     </div>
 

@@ -175,7 +175,7 @@ main {
     margin-bottom: 20px;
 }
 
-.modal-info-play button {
+.modal-box button {
     background-color: var(--clr-gold);
     border: 1px solid var(--clr-gold);
     font-family: var(--ff-body);
@@ -184,19 +184,90 @@ main {
     color: var(--clr-dark-gray);
     text-transform: uppercase;
     padding: .8em 3em;
+    margin: 50px auto 0;
     border-radius: 1.3em;
     display: block;
-    margin: 50px auto 30px;
     cursor: pointer;
     transition: background-color 200ms ease-in, color 200ms ease-in;
 }
 
-.modal-info-play button:hover,
-.modal-info-play button:focus {
+.modal-box button:hover,
+.modal-box button:focus {
     background-color: transparent;
     color: var(--clr-gold);
 }
 
+.modal-info-button button {
+    margin: 50px auto 30px;
+}
+
+.modal-settings-radio {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 50%;
+    min-width: 280px;
+}
+
+.modal-settings-radio-option label {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    font-weight: 700;
+    padding-left: 30px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.modal-settings-radio-option input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.radiobutton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    border: 1px solid var(--clr-gold);
+    border-radius: 50%;
+}
+
+.modal-settings-radio-option label:hover input ~ .radiobutton {
+    background-color: hsla(46, 65%, 52%, .5);
+}
+
+.modal-settings-radio-option label:hover checked ~ .radiobutton {
+    background-color: transparent;
+}
+
+.radiobutton:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.modal-settings-radio-option label input:checked ~ .radiobutton:after {
+    display: block;
+}
+
+.modal-settings-radio-option label .radiobutton:after {
+    top: 5px;
+    left: 5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--clr-gold);
+}
+
+.d-none {
+    display: none;
+}
 
 /* end of modal */
 
@@ -230,4 +301,7 @@ main {
         width: 42px;
         height: 42px;
     }
-}
+
+    .modal-settings-radio {
+        grid-template-columns: 1fr;
+    }
