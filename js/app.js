@@ -3,7 +3,6 @@ const goldSpots = [18,83,16,88,53,88,77,13,11,63,53,26,70,60,87,15,33,6,43,95,80
 (new Image()).src = '../imgs/goldpot.svg';
 (new Image()).src = '../imgs/water.jpg';
 
-
 const gameTiles = document.getElementsByClassName('game-tile');
 const gameGuessAmount = document.querySelector('.game-guess-amount');
 const modal = document.querySelector('.modal');
@@ -13,11 +12,19 @@ const modalStats = document.querySelector('.modal-stats');
 const modalClose = document.getElementsByClassName('modal-close');
 const timesClose = document.getElementsByClassName('fa-times');
 const btnSettings = document.querySelector('.settings');
+
+/* use of date for picking gold pot and defining if user have played today */
 const dayZero = 1663452000;
 const unixNow = Date.now() / 1000;
 const unixDay = 86400;
 const unixToday = unixNow - (unixNow % 86400);
 
+let playedToday = false;
+
+/* getting localstorage if unknown create empty*/
+const playerStats = window.localStorage.getItem('golddiver') !== null ? JSON.parse(window.localStorage.getItem('golddiver')) : {gamesPlayed: 0, gamesWon: 0, guessOne: 0, guessTwo: 0, guessThree: 0, lastPlayed: 0};
+
+playedToday = unixToday === playerStats.lastPlayed;
 
 const todaysGold = goldSpots[parseInt((unixToday - dayZero) / 86400)];
 let guesses = 1;
@@ -44,12 +51,63 @@ const turnTile = (tile, isGold) => {
     }
 }
 
+const updateStats = () => {
+    playerStats.gamesPlayed++;
+    if (foundGold) {
+        playerStats.gamesWon++;
+        switch (guesses) {
+            case 1:
+                playerStats.guessOne++;
+                break;
+            case 2:
+                playerStats.guessTwo++;
+                break;
+            case 3:
+                playerStats.guessThree++;
+                break;
+        }
+    }
+    playerStats.lastPlayed = unixToday;
+}
+
+const renderStatBars = () => {
+    const pixelPerPoint = 200 / Math.max(playerStats.guessOne, playerStats.guessTwo, playerStats.guessThree);
+
+    const modalStatsOneBar = document.querySelector('.modal-stats-one-bar');
+    const modalStatsTwoBar = document.querySelector('.modal-stats-two-bar');
+    const modalStatsThreeBar = document.querySelector('.modal-stats-three-bar');
+
+    if (playerStats.guessOne > 0) {
+        modalStatsOneBar.style.width = `${pixelPerPoint * playerStats.guessOne}px`;
+        modalStatsOneBar.innerHTML = `<span>${playerStats.guessOne}</span>`;
+    }
+    if (playerStats.guessTwo > 0) {
+        modalStatsTwoBar.style.width = `${pixelPerPoint * playerStats.guessTwo}px`;
+        modalStatsTwoBar.innerHTML = `<span>${playerStats.guessTwo}</span>`;
+    }
+    if (playerStats.guessThree > 0) {
+        modalStatsThreeBar.style.width = `${pixelPerPoint * playerStats.guessThree}px`;
+        modalStatsThreeBar.innerHTML = `<span>${playerStats.guessThree}</span>`;
+    }
+}
+
 const gameOver = () => {
+    /* update stats */
+    console.log(playerStats);
 
     document.querySelector('.modal-stats-outcome').innerHTML = `<p>You found ${foundGold ? 'gold!' : 'nothing..'}</p>`;
-    console.log('won');
     modal.classList.remove('d-none');
     modalStats.classList.remove('d-none');
+
+    const modalStatsQuests = document.querySelector('.modal-stats-quests');
+    const modalStatsPots = document.querySelector('.modal-stats-pots');
+    modalStatsQuests.innerText = playerStats.gamesPlayed;
+    modalStatsPots.innerText = playerStats.gamesWon;
+
+    if (playerStats.gamesWon > 0) {
+        renderStatBars();
+    }
+
 }
 
 for (let i = 0; i < gameTiles.length; i++) {
@@ -60,10 +118,16 @@ for (let i = 0; i < gameTiles.length; i++) {
         if (i === todaysGold) {
             foundGold = true;
             turnTile(e.target, foundGold)
+            if(!playedToday) {
+                updateStats();
+            }
             setTimeout(gameOver, 1200);
         } else {
             turnTile(e.target, foundGold)
             if (guesses === 3) {
+                if(!playedToday) {
+                    updateStats();
+                }
                 setTimeout(gameOver, 1200);   
             }
         }  

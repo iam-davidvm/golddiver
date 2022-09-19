@@ -354,17 +354,25 @@ main {
     background-color: var(--clr-dark-gray);
 }
 
-.modal-stats-one-bar {
-    width: 50px;
-}
-
-.modal-stats-two-bar {
-    width: 200px;
-}
-
+.modal-stats-one-bar,
+.modal-stats-two-bar,
 .modal-stats-three-bar {
-    width: 150px;
+    position: relative;
+    
 }
+
+.modal-stats-one-bar span,
+.modal-stats-two-bar span,
+.modal-stats-three-bar span {
+    position: absolute;
+    color: var(--clr-dark-gray);
+    display: block;
+    font-size: .8rem;
+    padding-top: 3px;
+    right: 5px;
+
+}
+
 
 .d-none {
     display: none;
