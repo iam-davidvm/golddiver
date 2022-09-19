@@ -13,8 +13,13 @@ const modalStats = document.querySelector('.modal-stats');
 const modalClose = document.getElementsByClassName('modal-close');
 const timesClose = document.getElementsByClassName('fa-times');
 const btnSettings = document.querySelector('.settings');
+const dayZero = 1663452000;
+const unixNow = Date.now() / 1000;
+const unixDay = 86400;
+const unixToday = unixNow - (unixNow % 86400);
 
-const todaysGold = goldSpots[0];
+
+const todaysGold = goldSpots[parseInt((unixToday - dayZero) / 86400)];
 let guesses = 1;
 let foundGold = false;
 
@@ -40,6 +45,8 @@ const turnTile = (tile, isGold) => {
 }
 
 const gameOver = () => {
+
+    document.querySelector('.modal-stats-outcome').innerHTML = `<p>You found ${foundGold ? 'gold!' : 'nothing..'}</p>`;
     console.log('won');
     modal.classList.remove('d-none');
     modalStats.classList.remove('d-none');
