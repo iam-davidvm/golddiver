@@ -90,6 +90,15 @@ main {
     margin-bottom: 20px;
 }
 
+.game-49 .game-frame {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    border: 5px solid var(--clr-gold);
+}
+
 .game-100 .game-frame {
     width: 100%;
     height: 100%;
@@ -99,6 +108,7 @@ main {
     border: 5px solid var(--clr-gold);
 }
 
+.game-49 .game-tile,
 .game-100 .game-tile {
     width: 62px;
     height: 62px;
@@ -392,6 +402,10 @@ main {
         width: 42px;
         height: 42px;
     }
+    .game-49 .game-tile {
+        width: 52px;
+        height: 52px;
+    }
 }
 
 @media (max-width: 450px) {
@@ -402,6 +416,13 @@ main {
     .game-100 .game-frame {
         grid-template-columns: repeat(5, 1fr);
         grid-template-rows: repeat(20, 1fr);
+    }
+}
+
+@media (max-width: 400px) {
+    .game-49 .game-tile {
+        width: 42px;
+        height: 42px;
     }
 }
 
@@ -416,5 +437,10 @@ main {
     }
     .modal-settings-radio-option label {
         margin-bottom: 14px;
+    }
+    
+    .game-49 .game-frame {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(10, 1fr);
     }
 }
