@@ -106,25 +106,25 @@ main {
 
 .game-open-tile {
     border: 0.5px dotted var(--clr-off-white);
-    background-color: var(--clr-dark-gray);
+    background: url(../imgs/water.jpg) center / cover no-repeat;
     cursor: pointer;
 }
 
 .game-bad-tile {
     background-color: transparent;
-    background: url(../imgs/water.jpg) center / cover no-repeat;
+    background: url(../imgs/skull.svg) center / 80% 80% no-repeat;
     transform: rotateY(180deg);
 }
 
 /* the game-open-tile should be visible for 2 seconds and do a flip animation, then it dissapears and there is the 2s flip of the pot */
 .game-pot-tile {
     background-color: var(--clr-light-blue);
-    background: url(../imgs/goldpot.svg) center / 80% 80% no-repeat;
+    background: url(../imgs/chest.svg) center / 80% 80% no-repeat;
     transform: rotateY(180deg);
 }
 
 .turn-front {
-    animation: turnFront 600ms;
+    animation: turnFront 600ms ease-in;
 }
 
 @keyframes turnFront {
@@ -137,7 +137,7 @@ main {
 }
 
 .turn-back {
-    animation: turnBack 600ms;
+    animation: turnBack 600ms ease-out;
 }
 
 
