@@ -44,12 +44,6 @@ const showInfo = () => {
 }
 /* end of show info */
 
-// check if the modal has to be shown or not
-if (!playedToday && playerStats.lastPlayed !== 0) {
-    playGame();
-} else if (playerStats.lastPlayed === 0) {
-    showInfo();
-}
 
 playedToday = unixToday === playerStats.lastPlayed;
 
@@ -128,7 +122,6 @@ const generatePots = () => {
 
 const gameOver = () => {
     /* update stats */
-    console.log(playerStats);
 
     document.querySelector('.modal-stats-outcome').innerHTML = `<p>You found ${foundGold ? 'gold!' : 'nothing..'}</p>`;
     modal.classList.remove('d-none');
@@ -138,6 +131,8 @@ const gameOver = () => {
     const modalStatsPots = document.querySelector('.modal-stats-pots');
     modalStatsQuests.innerText = playerStats.gamesPlayed;
     modalStatsPots.innerText = playerStats.gamesWon;
+
+    localStorage.setItem('golddiver', JSON.stringify(playerStats));
 
     if (playerStats.gamesWon > 0) {
         renderStatBars();
@@ -229,6 +224,13 @@ const playGame = () => {
 }
 /* end of gameplay */
 
+
+// check if the modal has to be shown or not
+if (playedToday || playerStats.lastPlayed !== 0) {
+    playGame();
+} else if (playerStats.lastPlayed === 0) {
+    showInfo();
+}
 
 /* save settings */
 const btnSaveSettings = modalSettings.querySelector('button');
