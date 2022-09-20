@@ -25,22 +25,24 @@ let playedToday = false;
 
 /* controls for default or non default game */
 let isDefault = true;
+let treasures = 0;
 let gridSize = 0;
 
 /* getting localstorage if unknown create empty*/
 const playerStats = window.localStorage.getItem('golddiver') !== null ? JSON.parse(window.localStorage.getItem('golddiver')) : {gamesPlayed: 0, gamesWon: 0, guessOne: 0, guessTwo: 0, guessThree: 0, lastPlayed: 0};
 
-
+/* show info for first time players */
 const showInfo = () => {
     modal.classList.remove('d-none');
     modalInfo.classList.remove('d-none');
     btnInfo = modalInfo.querySelector('button');
     btnInfo.addEventListener('click', () => {
-        modal.classList.add('d-none');
         modalInfo.classList.add('d-none');
+        modal.classList.add('d-none');
         playGame();
-    })
+    });
 }
+/* end of show info */
 
 // check if the modal has to be shown or not
 if (!playedToday && playerStats.lastPlayed !== 0) {
@@ -167,7 +169,6 @@ const playGame = () => {
                     foundGold = true;
                     turnTile(e.target, foundGold)
                     if(!playedToday) {
-                        console.log('run');
                         updateStats();
                     }
                     setTimeout(gameOver, 1200);
@@ -175,7 +176,6 @@ const playGame = () => {
                     turnTile(e.target, foundGold)
                     if (guesses === 3) {
                         if(!playedToday) {
-                            console.log('run');
                             updateStats();
                         }
                         setTimeout(gameOver, 1200);   
@@ -187,9 +187,36 @@ const playGame = () => {
                 }
             });
         }
+    } else {
+        console.log('no default game');
     }
 }
 /* end of gameplay */
+
+
+/* save settings */
+const btnSaveSettings = modalSettings.querySelector('button');
+btnSaveSettings.addEventListener('click', () => {
+    const radiosPots = document.querySelectorAll('input[name="pots"]');
+    for (let radioPots of radiosPots) {
+        if (radioPots.checked) {
+            treasures = radioPots.value;
+        }
+    }
+    const radiosSize = document.querySelectorAll('input[name="size"]');
+    for (let radioSize of radiosSize) {
+        if (radioSize.checked) {
+            gridSize = radioSize.value;
+        }
+    }
+    if (treasures !== 0 || gridSize !== 0) {
+        isDefault = false;
+    }
+    resetGame();
+    modal.classList.add('d-none');
+    modalSettings.classList.add('d-none');
+});
+/* end of save setting */
 
 
 /* hiding and showing modals */
@@ -197,10 +224,13 @@ modal.addEventListener('click', (e) => {
     if (!modalStats.classList.contains('d-none')) {
         resetGame();
         modalStats.classList.add('d-none');
-    }
-    modalSettings.classList.add('d-none');
-    if (modalInfo.classList.contains('d-none')) {
         modal.classList.add('d-none');
+    }
+    if(!modalSettings.classList.contains('d-none')) {
+        if (!e.target.classList.contains('radio-stats') && e.target.tagName !== 'BUTTON') {
+            modalSettings.classList.add('d-none');
+            modal.classList.add('d-none');
+        }
     }
 });
 
