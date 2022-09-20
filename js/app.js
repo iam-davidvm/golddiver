@@ -4,6 +4,7 @@ const goldSpots = [18,83,16,88,53,88,77,13,11,63,53,26,70,60,87,15,33,6,43,95,80
 (new Image()).src = '../imgs/skull.svg';
 (new Image()).src = '../imgs/water.jpg';
 
+const gameFrame = document.querySelector('.game-frame');
 const gameTiles = document.getElementsByClassName('game-tile');
 const gameGuessAmount = document.querySelector('.game-guess-amount');
 const modal = document.querySelector('.modal');
@@ -22,8 +23,31 @@ const unixToday = unixNow - (unixNow % 86400);
 
 let playedToday = false;
 
+/* controls for default or non default game */
+let isDefault = true;
+let gridSize = 0;
+
 /* getting localstorage if unknown create empty*/
 const playerStats = window.localStorage.getItem('golddiver') !== null ? JSON.parse(window.localStorage.getItem('golddiver')) : {gamesPlayed: 0, gamesWon: 0, guessOne: 0, guessTwo: 0, guessThree: 0, lastPlayed: 0};
+
+
+const showInfo = () => {
+    modal.classList.remove('d-none');
+    modalInfo.classList.remove('d-none');
+    btnInfo = modalInfo.querySelector('button');
+    btnInfo.addEventListener('click', () => {
+        modal.classList.add('d-none');
+        modalInfo.classList.add('d-none');
+        playGame();
+    })
+}
+
+// check if the modal has to be shown or not
+if (!playedToday && playerStats.lastPlayed !== 0) {
+    playGame();
+} else if (playerStats.lastPlayed === 0) {
+    showInfo();
+}
 
 playedToday = unixToday === playerStats.lastPlayed;
 
@@ -95,6 +119,7 @@ const renderStatBars = () => {
 const gameOver = () => {
     /* update stats */
     console.log(playerStats);
+    playedToday = true;
 
     document.querySelector('.modal-stats-outcome').innerHTML = `<p>You found ${foundGold ? 'gold!' : 'nothing..'}</p>`;
     modal.classList.remove('d-none');
@@ -111,49 +136,79 @@ const gameOver = () => {
 
 }
 
-for (let i = 0; i < gameTiles.length; i++) {
-    gameTiles[i].addEventListener('click', (e) => {
-        if (!e.target.classList.contains('game-open-tile') || guesses > 3) {
-            return;
-        }
-        if (i === todaysGold) {
-            foundGold = true;
-            turnTile(e.target, foundGold)
-            if(!playedToday) {
-                updateStats();
-            }
-            setTimeout(gameOver, 1200);
-        } else {
-            turnTile(e.target, foundGold)
-            if (guesses === 3) {
-                if(!playedToday) {
-                    updateStats();
-                }
-                setTimeout(gameOver, 1200);   
-            }
-        }  
-        guesses++;
-        if (guesses < 4) {
-            gameGuessAmount.innerText = guesses;
-        }
-    })
+
+const resetGame = () => {
+
+    // 0 = default (also 100)
+    gridSize = gridSize === 0 ? 100  : gridSize;
+    html = '';
+    
+    for (let i = 0; i < gridSize; i++) {
+        html += '<div class="game-tile game-open-tile"></div>';
+    }
+
+    gameFrame.innerHTML = html;
+    guesses = 1;
+    foundGold = false;
+    gameGuessAmount.innerText = guesses;
+
+    playGame();
 }
+
+/* gameplay function */
+const playGame = () => {
+    if (isDefault) {
+        for (let i = 0; i < gameTiles.length; i++) {
+            gameTiles[i].addEventListener('click', (e) => {
+                if (!e.target.classList.contains('game-open-tile') || guesses > 3) {
+                    return;
+                }
+                if (i === todaysGold) {
+                    foundGold = true;
+                    turnTile(e.target, foundGold)
+                    if(!playedToday) {
+                        console.log('run');
+                        updateStats();
+                    }
+                    setTimeout(gameOver, 1200);
+                } else {
+                    turnTile(e.target, foundGold)
+                    if (guesses === 3) {
+                        if(!playedToday) {
+                            console.log('run');
+                            updateStats();
+                        }
+                        setTimeout(gameOver, 1200);   
+                    }
+                }  
+                guesses++;
+                if (guesses < 4) {
+                    gameGuessAmount.innerText = guesses;
+                }
+            });
+        }
+    }
+}
+/* end of gameplay */
+
 
 /* hiding and showing modals */
 modal.addEventListener('click', (e) => {
-    const modalChildren = e.target.children;
-    for (let modalChild of modalChildren) {
-        if (!modalChild.classList.contains('d-none')) {
-            modalChild.classList.add('d-none');
-        }
+    if (!modalStats.classList.contains('d-none')) {
+        resetGame();
+        modalStats.classList.add('d-none');
     }
-    modal.classList.add('d-none');
+    modalSettings.classList.add('d-none');
+    if (modalInfo.classList.contains('d-none')) {
+        modal.classList.add('d-none');
+    }
 });
 
 
 for (let i = 0; i < modalClose.length; i++) {
     modalClose[i].addEventListener('click', (e) => {
         if (e.target.parentElement.classList[1] === 'modal-stats') {
+            resetGame();
             modalStats.classList.add('d-none');
         }
         modal.classList.add('d-none');
@@ -163,6 +218,7 @@ for (let i = 0; i < modalClose.length; i++) {
 for (let i = 0; i < timesClose.length; i++) {
     timesClose[i].addEventListener('click', (e) => {
         if (e.target.parentElement.parentElement.classList[1] === 'modal-stats') {
+            resetGame();
             modalStats.classList.add('d-none');
         }
         modal.classList.add('d-none');
