@@ -17,7 +17,7 @@ const timesClose = document.getElementsByClassName('fa-times');
 const btnSettings = document.querySelector('.settings');
 
 // I use the unixtime at 0:00 to define the placement of the treasure and to see if you have already played today 
-const dayZero = 1663452000;
+const dayZero = 1663797600;
 const unixNow = Date.now() / 1000;
 const unixDay = 86400;
 const unixToday = unixNow - (unixNow % unixDay);
