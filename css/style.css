@@ -383,6 +383,19 @@ main {
 
 }
 
+.modal-reveal {
+    animation: reveal 300ms ease-in-out;
+}
+
+@keyframes reveal {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 
 .d-none {
     display: none;
