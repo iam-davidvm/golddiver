@@ -92,22 +92,22 @@ const updateStats = () => {
 }
 
 const renderStatBars = () => {
-    const pixelPerPoint = 200 / Math.max(playerStats.guessOne, playerStats.guessTwo, playerStats.guessThree);
+    const percPerPoint = 80 / Math.max(playerStats.guessOne, playerStats.guessTwo, playerStats.guessThree);
 
     const modalStatsOneBar = document.querySelector('.modal-stats-one-bar');
     const modalStatsTwoBar = document.querySelector('.modal-stats-two-bar');
     const modalStatsThreeBar = document.querySelector('.modal-stats-three-bar');
 
     if (playerStats.guessOne > 0) {
-        modalStatsOneBar.style.width = `${pixelPerPoint * playerStats.guessOne}px`;
+        modalStatsOneBar.style.width = `${percPerPoint * playerStats.guessOne}%`;
         modalStatsOneBar.innerHTML = `<span>${playerStats.guessOne}</span>`;
     }
     if (playerStats.guessTwo > 0) {
-        modalStatsTwoBar.style.width = `${pixelPerPoint * playerStats.guessTwo}px`;
+        modalStatsTwoBar.style.width = `${percPerPoint * playerStats.guessTwo}%`;
         modalStatsTwoBar.innerHTML = `<span>${playerStats.guessTwo}</span>`;
     }
     if (playerStats.guessThree > 0) {
-        modalStatsThreeBar.style.width = `${pixelPerPoint * playerStats.guessThree}px`;
+        modalStatsThreeBar.style.width = `${percPerPoint * playerStats.guessThree}%`;
         modalStatsThreeBar.innerHTML = `<span>${playerStats.guessThree}</span>`;
     }
 }
