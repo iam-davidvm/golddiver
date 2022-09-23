@@ -55,6 +55,8 @@ const showInfo = () => {
 
 /* action that happens when someone clicks on a tile */
 const turnTile = (tile, isGold) => {
+
+
     tile.classList.toggle('turn-front');
     if (isGold){
         setTimeout(function() {
@@ -184,7 +186,7 @@ const playGame = () => {
     if (isDefault) {
         for (let i = 0; i < gameTiles.length; i++) {
             gameTiles[i].addEventListener('click', (e) => {
-                if (!e.target.classList.contains('game-open-tile') || guesses > 3) {
+                if (!e.target.classList.contains('game-open-tile') || guesses > 3 || foundGold) {
                     return;
                 }
                 if (i === todaysGold) {
@@ -215,7 +217,7 @@ const playGame = () => {
         const randomTreasures = generateTreasures();
         for (let i = 0; i < gameTiles.length; i++) {
             gameTiles[i].addEventListener('click', (e) => {
-                if (!e.target.classList.contains('game-open-tile') || guesses > 3) {
+                if (!e.target.classList.contains('game-open-tile') || guesses > 3 || foundGold) {
                     return;
                 }
                 if (randomTreasures.indexOf(i) !== -1) {
